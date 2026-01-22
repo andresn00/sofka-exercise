@@ -14,4 +14,9 @@
   } @empty {
     <p>No hay productos disponibles</p>
   }
+  <select [formControl]="this.fcRows">
+    @for (rows of availableRowsToShow; track $index) {
+      <option [value]="rows">{{ rows }}</option>
+    }
+  </select>
 </section>

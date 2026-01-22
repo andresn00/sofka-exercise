@@ -2,7 +2,15 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { debounceTime, distinctUntilChanged, map, shareReplay, startWith, switchMap } from 'rxjs';
+import {
+  combineLatest,
+  combineLatestWith,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  shareReplay,
+  startWith,
+} from 'rxjs';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
@@ -15,7 +23,16 @@ export class ProductsListPage {
   private productsService = inject(ProductsService);
   private fb = inject(FormBuilder);
 
+  availableRowsToShow = [5, 10, 20];
+
   fcSearch = this.fb.nonNullable.control('');
+  fcRows = this.fb.nonNullable.control(this.availableRowsToShow[0]);
+
+  searchValue$ = this.fcSearch.valueChanges.pipe(
+    debounceTime(300),
+    distinctUntilChanged(),
+    startWith(this.fcSearch.value)
+  );
 
   // TODO handle products state
   products$ = this.productsService.getProducts().pipe(
@@ -23,22 +40,17 @@ export class ProductsListPage {
     shareReplay({ bufferSize: 1, refCount: true })
   );
 
-  filteredProducts$ = this.fcSearch.valueChanges.pipe(
-    debounceTime(300),
-    distinctUntilChanged(),
-    startWith(this.fcSearch.value),
-    switchMap((search) =>
+  filteredProducts$ = combineLatest([this.products$, this.searchValue$]).pipe(
+    map(([products, search]) =>
       !search
-        ? this.products$
-        : this.products$.pipe(
-            map((products) =>
-              products.filter((product) => {
-                // TODO normalize texts
-                return product.name.includes(search);
-              })
-            )
-          )
-    )
+        ? products
+        : products.filter((product) => {
+            // TODO normalize texts
+            return product.name.includes(search);
+          })
+    ),
+    combineLatestWith(this.fcRows.valueChanges.pipe(startWith(this.fcRows.value))),
+    map(([products, rows]) => products.slice(0, rows))
   );
 
   onDelete(id: string) {

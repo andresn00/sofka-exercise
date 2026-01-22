@@ -6,7 +6,10 @@
 </div>
 <section>
   @for (product of products$ | async; track $index) {
-    {{ product | json }}
+    <div>
+      {{ product | json }}
+      <button [routerLink]="['./edit', product.id]" [state]="product">Editar</button>
+    </div>
   } @empty {
     <p>No hay productos disponibles</p>
   }

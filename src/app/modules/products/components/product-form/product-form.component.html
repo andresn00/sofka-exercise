@@ -1,0 +1,33 @@
+<form [formGroup]="fgProduct()">
+  <div class="form-inputs-wrapper">
+    <div class="form-field">
+      <label for="id">ID</label>
+      <input id="id" type="text" formControlName="id" placeholder="Ingrese el ID del producto" />
+    </div>
+
+    <div class="form-field">
+      <label for="name">Nombre</label>
+      <input id="name" type="text" formControlName="name" placeholder="Ingrese el nombre del producto" />
+    </div>
+
+    <div class="form-field">
+      <label for="description">Descripción</label>
+      <input id="description" formControlName="description" placeholder="Ingrese la descripción del producto" />
+    </div>
+
+    <div class="form-field">
+      <label for="logo">Logo</label>
+      <input id="logo" type="text" formControlName="logo" placeholder="Ingrese la URL del logo" />
+    </div>
+
+    <div class="form-field">
+      <label for="date_release">Fecha Liberación</label>
+      <input id="date_release" type="date" formControlName="date_release" />
+    </div>
+
+    <div class="form-field">
+      <label for="date_revision">Fecha Revisión</label>
+      <input id="date_revision" type="date" formControlName="date_revision" />
+    </div>
+  </div>
+</form>

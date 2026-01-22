@@ -9,6 +9,7 @@
     <div>
       {{ product | json }}
       <button [routerLink]="['./edit', product.id]" [state]="product">Editar</button>
+      <button (click)="onDelete(product.id)">Eliminar</button>
     </div>
   } @empty {
     <p>No hay productos disponibles</p>

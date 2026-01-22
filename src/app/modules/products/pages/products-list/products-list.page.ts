@@ -13,5 +13,12 @@ import { ProductsService } from '../../services/products.service';
 export class ProductsListPage {
   private productsService = inject(ProductsService);
 
+  // TODO handle products state
   products$ = this.productsService.getProducts().pipe(map((res) => res.data));
+
+  onDelete(id: string) {
+    this.productsService.deleteProduct(id).subscribe(() => {
+      // TODO remove from products state
+    });
+  }
 }

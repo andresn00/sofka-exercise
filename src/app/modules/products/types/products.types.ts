@@ -1,3 +1,5 @@
+import { FormControl, FormGroup } from '@angular/forms';
+
 export type Product = {
   id: string;
   name: string;
@@ -8,3 +10,12 @@ export type Product = {
 };
 
 export type UpdateProduct = Omit<Product, 'id'>;
+
+export type FgProduct = FormGroup<{
+  id: FormControl<string>;
+  name: FormControl<string>;
+  description: FormControl<string>;
+  logo: FormControl<string>;
+  date_release: FormControl<string>;
+  date_revision: FormControl<string>;
+}>;

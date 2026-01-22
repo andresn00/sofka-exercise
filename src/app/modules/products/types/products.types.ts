@@ -6,3 +6,5 @@ export type Product = {
   date_release: string;
   date_revision: string;
 };
+
+export type UpdateProduct = Omit<Product, 'id'>;

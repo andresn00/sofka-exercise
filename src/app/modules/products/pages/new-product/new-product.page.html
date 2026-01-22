@@ -1,1 +1,7 @@
-<p>new-product works!</p>
+<h2 class="form-header">Formulario de Registro</h2>
+<app-product-form [fgProduct]="fgProduct"></app-product-form>
+<!-- Buttons -->
+<div class="form-buttons">
+  <button type="button" (click)="onReset()">Reiniciar</button>
+  <button type="submit" (click)="onSubmit()" [disabled]="!fgProduct.valid">Enviar</button>
+</div>

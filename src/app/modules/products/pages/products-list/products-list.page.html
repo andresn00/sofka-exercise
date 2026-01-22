@@ -1,1 +1,13 @@
-<p>product-list works!</p>
+<div class="actions-toolbar">
+  <div>
+    <input placeholder="Search" />
+  </div>
+  <button routerLink="./new">Agregar</button>
+</div>
+<section>
+  @for (product of products$ | async; track $index) {
+    {{ product | json }}
+  } @empty {
+    <p>No hay productos disponibles</p>
+  }
+</section>

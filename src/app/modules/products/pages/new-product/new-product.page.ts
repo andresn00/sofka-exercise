@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addYears, format, parse } from 'date-fns';
@@ -31,7 +32,7 @@ export class NewProductPage {
   });
 
   constructor() {
-    this.fgProduct.controls.date_release.valueChanges.subscribe((date) => {
+    this.fgProduct.controls.date_release.valueChanges.pipe(takeUntilDestroyed()).subscribe((date) => {
       const parsedDate = parse(date, this.dateFormat, new Date());
       const oneYearLater = addYears(parsedDate, 1);
       const oneYearLaterFormatted = format(oneYearLater, this.dateFormat);

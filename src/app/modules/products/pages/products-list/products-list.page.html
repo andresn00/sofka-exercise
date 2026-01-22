@@ -1,11 +1,11 @@
 <div class="actions-toolbar">
   <div>
-    <input placeholder="Search" />
+    <input [formControl]="this.fcSearch" placeholder="Search" />
   </div>
   <button routerLink="./new">Agregar</button>
 </div>
 <section>
-  @for (product of products$ | async; track $index) {
+  @for (product of filteredProducts$ | async; track $index) {
     <div>
       {{ product | json }}
       <button [routerLink]="['./edit', product.id]" [state]="product">Editar</button>

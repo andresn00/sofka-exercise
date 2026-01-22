@@ -6,4 +6,8 @@ export const productsRoutes: Routes = [
     pathMatch: 'full',
     loadComponent: () => import('./pages/products-list/products-list.page').then((m) => m.ProductsListPage),
   },
+  {
+    path: 'new',
+    loadComponent: () => import('./pages/new-product/new-product.page').then((m) => m.NewProductPage),
+  },
 ];

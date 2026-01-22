@@ -12,8 +12,8 @@ export class ProductsService {
 
   private baseUrl = '/api/bp/products';
 
-  getProducts(): Observable<GenericResponse<Product>> {
-    return this.http.get<GenericResponse<Product>>(this.baseUrl);
+  getProducts(): Observable<GenericResponse<Product[]>> {
+    return this.http.get<GenericResponse<Product[]>>(this.baseUrl);
   }
 
   verifyProduct(id: string): Observable<boolean> {

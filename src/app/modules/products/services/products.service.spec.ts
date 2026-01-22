@@ -27,15 +27,17 @@ describe('ProductsService', () => {
 
   describe('getProducts', () => {
     it('should fetch all products', () => {
-      const mockResponse: GenericResponse<Product> = {
-        data: {
-          id: '1',
-          name: 'Product 1',
-          description: 'Description 1',
-          logo: 'logo1.png',
-          date_release: '2024-01-01',
-          date_revision: '2024-01-02',
-        },
+      const mockResponse: GenericResponse<Product[]> = {
+        data: [
+          {
+            id: '1',
+            name: 'Product 1',
+            description: 'Description 1',
+            logo: 'logo1.png',
+            date_release: '2024-01-01',
+            date_revision: '2024-01-02',
+          },
+        ],
         message: 'Success',
       };
 

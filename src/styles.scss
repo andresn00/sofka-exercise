@@ -1,4 +1,115 @@
 :root {
   font-family: sans-serif;
   font-size: 14px;
+
+  // Colors
+  // Surface
+  --color-surface-0: #ffffff;
+  --color-surface-50: #fafafa;
+  --color-surface-100: #f4f4f5;
+  --color-surface-200: #e4e4e7;
+  --color-surface-300: #d4d4d8;
+  --color-surface-400: #a1a1aa;
+  --color-surface-500: #71717a;
+  --color-surface-600: #52525b;
+  --color-surface-700: #3f3f46;
+  --color-surface-800: #27272a;
+  --color-surface-900: #18181b;
+  --color-surface-950: #09090b;
+
+  // Primary
+  --color-primary-50: #fdf7dc;
+  --color-primary-100: #fceeb2;
+  --color-primary-200: #f5e067;
+  --color-primary-300: #d4c258;
+  --color-primary-400: #b4a449;
+  --color-primary-500: #91843a;
+  --color-primary-600: #73692c;
+  --color-primary-700: #564e1f;
+  --color-primary-800: #3b3513;
+  --color-primary-900: #221e08;
+  --color-primary-950: #161304;
+  --color-primary: var(--color-primary-200);
+
+  // Secondary
+  --color-secondary-50: #f4f6f9;
+  --color-secondary-100: #e3e9f0;
+  --color-secondary-200: #c1cdde;
+  --color-secondary-300: #9ab0cb;
+  --color-secondary-400: #7d95b3;
+  --color-secondary-500: #677b94;
+  --color-secondary-600: #526276;
+  --color-secondary-700: #3d4a5a;
+  --color-secondary-800: #28313c;
+  --color-secondary-900: #161c24;
+  --color-secondary-950: #0d1117;
+
+  // Danger
+  --color-danger-50: #fef2f2;
+  --color-danger-100: #fee2e2;
+  --color-danger-200: #fecaca;
+  --color-danger-300: #fca5a5;
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+  --color-danger-800: #991b1b;
+  --color-danger-900: #7f1d1d;
+  --color-danger-950: #450a0a;
+  --color-danger: var(--color-danger-600);
+
+  // App
+  --app-border-radius: 4px;
+  --app-default-transition: all 0.3s ease;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: var(--color-secondary-50);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: 600;
+    transition: var(--app-default-transition);
+  }
+
+  input {
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--color-surface-950);
+    background: var(--color-surface-0);
+    padding-block: 0.75rem;
+    padding-inline: 0.5rem;
+    border: 2px solid var(--color-surface-400);
+    transition: var(--app-default-transition);
+    appearance: none;
+    border-radius: var(--app-border-radius);
+    outline-color: transparent;
+    min-width: 200px;
+
+    // States
+    &:hover:not(:disabled, :focus) {
+      border-color: var(--color-surface-500);
+    }
+    &:focus {
+      border-color: var(--color-primary);
+    }
+    &:focus-visible {
+      outline: none;
+    }
+    &:disabled {
+      background-color: var(--color-surface-100);
+      color: var(--color-surface-400);
+      border-color: var(--color-surface-200);
+    }
+    &.ng-touched.ng-dirty.ng-invalid:not(:focus) {
+      border-color: var(--color-danger);
+    }
+  }
 }

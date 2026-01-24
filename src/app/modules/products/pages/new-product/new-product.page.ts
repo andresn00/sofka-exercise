@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addYears, format, parse } from 'date-fns';
+import { filter, switchMap, tap } from 'rxjs';
 import { INPUT_DATE_FORMAT } from '../../../../constants/date.constants';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
@@ -42,9 +43,19 @@ export class NewProductPage {
   onSubmit(): void {
     if (!this.fgProduct.valid) return;
 
-    this.productsService.createProduct(this.fgProduct.getRawValue()).subscribe(() => {
-      this.router.navigate(['..'], { relativeTo: this.route });
-    });
+    const product = this.fgProduct.getRawValue();
+    this.productsService
+      .verifyProduct(product.id)
+      .pipe(
+        tap((exists) => {
+          if (exists) return this.fgProduct.controls.id.setErrors({ idExists: true });
+        }),
+        filter((exists) => !exists),
+        switchMap(() => this.productsService.createProduct(product))
+      )
+      .subscribe(() => {
+        this.router.navigate(['..'], { relativeTo: this.route });
+      });
   }
 
   onReset(): void {

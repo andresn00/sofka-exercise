@@ -5,7 +5,12 @@
       <label for="id">ID</label>
       <input id="id" type="text" formControlName="id" placeholder="Ingrese el ID del producto" />
       <app-form-error
-        [errors]="{ required: 'ID requerido', minlength: 'ID no válido', maxlength: 'ID no válido' }"
+        [errors]="{
+          required: 'ID requerido',
+          minlength: 'ID no válido',
+          maxlength: 'ID no válido',
+          idExists: 'ID ya existente',
+        }"
       ></app-form-error>
     </app-form-field>
 

@@ -1,5 +1,5 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import {
@@ -11,19 +11,23 @@ import {
   shareReplay,
   startWith,
 } from 'rxjs';
+import { ButtonDirective } from '../../../../directives/button/button.directive';
+import { FormFieldComponent } from '../../../forms/components/form-field/form-field.component';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-product-list',
-  imports: [AsyncPipe, JsonPipe, RouterLink, ReactiveFormsModule],
+  imports: [AsyncPipe, DatePipe, RouterLink, ReactiveFormsModule, ButtonDirective, FormFieldComponent],
   templateUrl: './products-list.page.html',
   styleUrl: './products-list.page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListPage {
   private productsService = inject(ProductsService);
   private fb = inject(FormBuilder);
 
   availableRowsToShow = [5, 10, 20];
+  dateFormat = 'dd/MM/yyyy';
 
   fcSearch = this.fb.nonNullable.control('');
   fcRows = this.fb.nonNullable.control(this.availableRowsToShow[0]);

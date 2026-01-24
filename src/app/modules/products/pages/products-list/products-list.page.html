@@ -1,22 +1,57 @@
-<div class="actions-toolbar">
-  <div>
-    <input [formControl]="this.fcSearch" placeholder="Search" />
+<div class="page-content">
+  <div class="actions-toolbar">
+    <app-form-field [reserveMessageSpace]="false">
+      <input [formControl]="this.fcSearch" placeholder="Search" />
+    </app-form-field>
+    <button appButton routerLink="./new">Agregar</button>
   </div>
-  <button routerLink="./new">Agregar</button>
-</div>
-<section>
-  @for (product of filteredProducts$ | async; track $index) {
-    <div>
-      {{ product | json }}
-      <button [routerLink]="['./edit', product.id]" [state]="product">Editar</button>
-      <button (click)="onDelete(product.id)">Eliminar</button>
+  <section class="table-section">
+    @let filteredProducts = filteredProducts$ | async;
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th class="avatar">Logo</th>
+            <th>Nombre</th>
+            <!-- TODO info icon -->
+            <th>Descripción</th>
+            <th>Fecha de liberación</th>
+            <th>Fecha de revisión</th>
+            <!-- Actions -->
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of filteredProducts; track $index) {
+            <tr>
+              <td class="avatar">
+                <div><img [src]="product.logo" alt="Logo" /></div>
+              </td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.description }}</td>
+              <td>{{ product.date_release | date: dateFormat }}</td>
+              <td>{{ product.date_revision | date: dateFormat }}</td>
+              <!-- TODO 3 dots icon, menu -->
+              <td>
+                <button [routerLink]="['./edit', product.id]" [state]="product">Editar</button>
+                <button (click)="onDelete(product.id)">Eliminar</button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5">No hay productos disponibles</td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </div>
-  } @empty {
-    <p>No hay productos disponibles</p>
-  }
-  <select [formControl]="this.fcRows">
-    @for (rows of availableRowsToShow; track $index) {
-      <option [value]="rows">{{ rows }}</option>
-    }
-  </select>
-</section>
+    <div class="table-footer">
+      <p>{{ filteredProducts?.length || 0 }} {{ filteredProducts?.length === 1 ? 'Resultado' : 'Resultados' }}</p>
+      <select [formControl]="this.fcRows" id="rows">
+        @for (rows of availableRowsToShow; track $index) {
+          <option [value]="rows">{{ rows }}</option>
+        }
+      </select>
+    </div>
+  </section>
+</div>

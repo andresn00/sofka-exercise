@@ -1,0 +1,12 @@
+@let vmError = vmError$ | async;
+@if (vmError?.showError) {
+  <div class="form-error">
+    <small>
+      @if (vmError?.errorMessage; as errorMessage) {
+        {{ errorMessage }}
+      } @else {
+        <ng-content></ng-content>
+      }
+    </small>
+  </div>
+}

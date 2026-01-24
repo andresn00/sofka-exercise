@@ -1,0 +1,12 @@
+<div class="form-field">
+  <ng-content></ng-content>
+  <!-- Message -->
+  @let isErrorActive = isErrorActive$ | async;
+  @if (reserveMessageSpace() || isErrorActive) {
+    <div class="form-message">
+      @if (isErrorActive) {
+        <ng-content select="app-form-error"></ng-content>
+      }
+    </div>
+  }
+</div>

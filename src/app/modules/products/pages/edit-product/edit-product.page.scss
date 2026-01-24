@@ -1,9 +1,27 @@
+.page-card {
+  width: min(800px, calc(100% - 2rem));
+  margin: 4rem auto 0 auto;
+  background-color: var(--color-surface-0);
+  border-radius: var(--app-border-radius);
+}
+
 .form-header {
   text-align: center;
+  font-size: 1.75rem;
+  margin: 0rem;
+  padding: 1.5rem 1rem;
+}
+
+hr {
+  margin: 0;
+}
+
+.form-wrapper {
+  padding: 1rem 1.75rem;
 }
 
 .form-buttons {
-  margin-top: 1rem;
+  padding: 2rem;
   display: flex;
   justify-content: center;
   gap: 1rem;

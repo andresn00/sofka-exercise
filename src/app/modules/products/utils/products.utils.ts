@@ -13,7 +13,7 @@ export const buildProductForm = (fb: FormBuilder, mode: 'new' | 'edit', minDateR
     id: [
       { value: '', disabled: mode === 'edit' },
       [Validators.required, Validators.minLength(3), Validators.maxLength(10)],
-    ], // TODO async validator verify id
+    ],
     name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
     description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
     logo: ['', [Validators.required]],

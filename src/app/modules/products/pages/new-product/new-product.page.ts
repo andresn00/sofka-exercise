@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,7 @@ import { buildProductForm } from '../../utils/products.utils';
   imports: [ProductFormComponent, ButtonDirective],
   templateUrl: './new-product.page.html',
   styleUrl: './new-product.page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewProductPage {
   private productsService = inject(ProductsService);

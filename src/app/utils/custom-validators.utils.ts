@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { isAfter, isBefore, isEqual, isValid, parse } from 'date-fns';
+import { format, isAfter, isBefore, isEqual, isValid, parse } from 'date-fns';
 
 type DateComparisonOperator = '>' | '>=' | '<' | '<=' | '=';
 
@@ -12,28 +12,31 @@ export class CustomValidators {
       const date = parse(value, dateFormat, new Date());
       if (!date || !isValid(date)) return { invalidDate: true };
 
+      const dateStr = format(date, dateFormat);
+      const compareToDateStr = format(compareToDate, dateFormat);
+
       let valid = false;
       switch (operator) {
         case '>':
-          valid = isAfter(date, compareToDate);
+          valid = isAfter(dateStr, compareToDateStr);
           break;
         case '>=':
-          valid = isAfter(date, compareToDate) || isEqual(date, compareToDate);
+          valid = isAfter(dateStr, compareToDateStr) || isEqual(dateStr, compareToDateStr);
           break;
         case '<':
-          valid = isBefore(date, compareToDate);
+          valid = isBefore(dateStr, compareToDateStr);
           break;
         case '<=':
-          valid = isBefore(date, compareToDate) || isEqual(date, compareToDate);
+          valid = isBefore(dateStr, compareToDateStr) || isEqual(dateStr, compareToDateStr);
           break;
         case '=':
-          valid = isEqual(date, compareToDate);
+          valid = isEqual(dateStr, compareToDateStr);
           break;
         default:
-          valid = isAfter(date, compareToDate);
+          valid = isAfter(dateStr, compareToDateStr);
       }
       if (valid) return null;
-      return { dateCompare: { operator, compareToDate: compareToDate } };
+      return { dateCompare: { operator, compareToDate } };
     };
   }
 }

@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addYears, format, parse } from 'date-fns';
+import { INPUT_DATE_FORMAT } from '../../../../constants/date.constants';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { ProductsService } from '../../services/products.service';
-import { FgProduct } from '../../types/products.types';
+import { buildProductForm } from '../../utils/products.utils';
 
 @Component({
   selector: 'app-new-product',
@@ -20,24 +21,21 @@ export class NewProductPage {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  private now = new Date();
-  private dateFormat = 'yyyy-MM-dd';
+  minDateRelease = new Date();
 
-  fgProduct: FgProduct = this.fb.nonNullable.group({
-    id: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]], // TODO async validator verify id
-    name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-    description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
-    logo: ['', [Validators.required]],
-    date_release: ['', [Validators.required]], // TODO validate equal or greater than now
-    date_revision: [{ value: '', disabled: true }, [Validators.required]], // TODO exactly one year later
-  });
+  fgProduct = buildProductForm(this.fb, 'new', this.minDateRelease);
 
   constructor() {
     this.fgProduct.controls.date_release.valueChanges.pipe(takeUntilDestroyed()).subscribe((date) => {
-      const parsedDate = parse(date, this.dateFormat, new Date());
+      const fcDateRevision = this.fgProduct.controls.date_revision;
+      if (!date) {
+        fcDateRevision.setValue('');
+        return;
+      }
+      const parsedDate = parse(date, INPUT_DATE_FORMAT, new Date());
       const oneYearLater = addYears(parsedDate, 1);
-      const oneYearLaterFormatted = format(oneYearLater, this.dateFormat);
-      this.fgProduct.controls.date_revision.setValue(oneYearLaterFormatted);
+      const oneYearLaterFormatted = format(oneYearLater, INPUT_DATE_FORMAT);
+      fcDateRevision.setValue(oneYearLaterFormatted);
     });
   }
 

@@ -41,8 +41,19 @@
     <!-- Date Release -->
     <app-form-field>
       <label for="date_release">Fecha Liberación</label>
-      <input id="date_release" type="date" formControlName="date_release" />
-      <app-form-error [errors]="{ required: 'Fecha liberación requerida' }"></app-form-error>
+      <input
+        id="date_release"
+        type="date"
+        [min]="minDateRelease() | date: INPUT_DATE_FORMAT"
+        formControlName="date_release"
+      />
+      <app-form-error
+        [errors]="{
+          required: 'Fecha liberación requerida',
+          invalidDate: 'Fecha no válida',
+          dateCompare: 'Fecha no válida',
+        }"
+      ></app-form-error>
     </app-form-field>
 
     <!-- Date Revision -->

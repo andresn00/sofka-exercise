@@ -1,7 +1,12 @@
-<h2 class="form-header">Formulario de Registro</h2>
-<app-product-form [fgProduct]="fgProduct"></app-product-form>
-<!-- Buttons -->
-<div class="form-buttons">
-  <button type="button" (click)="onReset()">Reiniciar</button>
-  <button type="submit" (click)="onSubmit()" [disabled]="!fgProduct.valid">Enviar</button>
+<div class="page-card">
+  <h2 class="form-header">Formulario de Registro</h2>
+  <hr />
+  <div class="form-wrapper">
+    <app-product-form [fgProduct]="fgProduct"></app-product-form>
+  </div>
+  <!-- Buttons -->
+  <div class="form-buttons">
+    <button appButton color="secondary" type="button" (click)="onReset()">Reiniciar</button>
+    <button appButton type="submit" (click)="onSubmit()" [disabled]="!fgProduct.valid">Enviar</button>
+  </div>
 </div>

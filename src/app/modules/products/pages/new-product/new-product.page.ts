@@ -3,13 +3,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addYears, format, parse } from 'date-fns';
+import { ButtonDirective } from '../../../../directives/button/button.directive';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { ProductsService } from '../../services/products.service';
 import { FgProduct } from '../../types/products.types';
 
 @Component({
   selector: 'app-new-product',
-  imports: [ProductFormComponent],
+  imports: [ProductFormComponent, ButtonDirective],
   templateUrl: './new-product.page.html',
   styleUrl: './new-product.page.scss',
 })

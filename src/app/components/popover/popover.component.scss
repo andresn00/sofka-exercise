@@ -1,0 +1,17 @@
+.popover-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.popover-box {
+  position: absolute;
+  background: var(--color-surface-0);
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+}

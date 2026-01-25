@@ -1,0 +1,14 @@
+@if (isOpen()) {
+  <div class="popover-overlay" (click)="close()">
+    <div
+      #popoverBox
+      class="popover-box"
+      [style.top.px]="boxProps().top"
+      [style.left.px]="boxProps().left"
+      [style.opacity]="boxProps().opacity"
+      (click)="$event.stopPropagation()"
+    >
+      <ng-content></ng-content>
+    </div>
+  </div>
+}

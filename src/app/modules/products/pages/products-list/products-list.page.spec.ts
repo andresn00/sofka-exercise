@@ -1,8 +1,11 @@
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ActivatedRoute } from '@angular/router';
+import { ProductsStore } from '../../store/products.store';
 import { ProductsListPage } from './products-list.page';
+
+const routeMock = {};
+const productsStoreMock = {};
 
 describe('ProductListPage', () => {
   let component: ProductsListPage;
@@ -11,7 +14,10 @@ describe('ProductListPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProductsListPage],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [
+        { provide: ActivatedRoute, useValue: routeMock },
+        { provide: ProductsStore, useValue: productsStoreMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProductsListPage);

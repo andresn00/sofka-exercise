@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { combineLatest, combineLatestWith, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
+import { PopoverComponent } from '../../../../components/popover/popover.component';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
 import { normalizeString } from '../../../../utils/string.utils';
 import { FormFieldComponent } from '../../../forms/components/form-field/form-field.component';
@@ -10,7 +11,15 @@ import { ProductsStore } from '../../store/products.store';
 
 @Component({
   selector: 'app-product-list',
-  imports: [AsyncPipe, DatePipe, RouterLink, ReactiveFormsModule, ButtonDirective, FormFieldComponent],
+  imports: [
+    AsyncPipe,
+    DatePipe,
+    RouterLink,
+    ReactiveFormsModule,
+    ButtonDirective,
+    FormFieldComponent,
+    PopoverComponent,
+  ],
   templateUrl: './products-list.page.html',
   styleUrl: './products-list.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

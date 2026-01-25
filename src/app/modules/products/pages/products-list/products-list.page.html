@@ -33,8 +33,13 @@
               <td>{{ product.date_revision | date: dateFormat }}</td>
               <!-- TODO 3 dots icon, menu -->
               <td>
-                <button [routerLink]="['./edit', product.id]">Editar</button>
-                <button (click)="onDelete(product.id)">Eliminar</button>
+                <button (click)="popover.open($event)">...</button>
+                <app-popover #popover>
+                  <div class="action-popover">
+                    <button appButton color="secondary" [routerLink]="['./edit', product.id]">Editar</button>
+                    <button appButton color="danger" (click)="onDelete(product.id)">Eliminar</button>
+                  </div>
+                </app-popover>
               </td>
             </tr>
           } @empty {

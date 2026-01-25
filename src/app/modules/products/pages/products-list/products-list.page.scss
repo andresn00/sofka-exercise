@@ -76,3 +76,8 @@ td.avatar {
   gap: 0.5rem;
   padding: 1rem;
 }
+
+.action-popover {
+  display: flex;
+  flex-direction: column;
+}

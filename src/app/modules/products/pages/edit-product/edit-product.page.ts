@@ -3,11 +3,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addYears, format, parse } from 'date-fns';
+import { switchMap } from 'rxjs';
 import { INPUT_DATE_FORMAT } from '../../../../constants/date.constants';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
-import { ProductsService } from '../../services/products.service';
-import { Product } from '../../types/products.types';
+import { ProductsStore } from '../../store/products.store';
 import { buildProductForm } from '../../utils/products.utils';
 
 @Component({
@@ -18,7 +18,7 @@ import { buildProductForm } from '../../utils/products.utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditProductPage {
-  private productsService = inject(ProductsService);
+  private productsStore = inject(ProductsStore);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -27,11 +27,13 @@ export class EditProductPage {
 
   fgProduct = buildProductForm(this.fb, 'edit', this.minDateRelease);
 
+  product$ = this.route.paramMap.pipe(switchMap((params) => this.productsStore.getProduct(params.get('id') as string)));
+
   constructor() {
-    const product = this.router.getCurrentNavigation()?.extras.state as Product | undefined;
-    if (product) {
+    this.product$.pipe(takeUntilDestroyed()).subscribe((product) => {
+      if (!product) return;
       this.fgProduct.patchValue(product);
-    }
+    });
 
     this.fgProduct.controls.date_release.valueChanges.pipe(takeUntilDestroyed()).subscribe((date) => {
       const fcDateRevision = this.fgProduct.controls.date_revision;
@@ -50,7 +52,7 @@ export class EditProductPage {
     if (!this.fgProduct.valid) return;
 
     const product = this.fgProduct.getRawValue();
-    this.productsService.updateProduct(product.id, product).subscribe(() => {
+    this.productsStore.updateProduct(product.id, product).subscribe(() => {
       this.router.navigate(['../..'], { relativeTo: this.route });
     });
   }

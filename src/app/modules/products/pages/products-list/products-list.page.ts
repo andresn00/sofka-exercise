@@ -2,18 +2,10 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import {
-  combineLatest,
-  combineLatestWith,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  shareReplay,
-  startWith,
-} from 'rxjs';
+import { combineLatest, combineLatestWith, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
 import { FormFieldComponent } from '../../../forms/components/form-field/form-field.component';
-import { ProductsService } from '../../services/products.service';
+import { ProductsStore } from '../../store/products.store';
 
 @Component({
   selector: 'app-product-list',
@@ -23,7 +15,7 @@ import { ProductsService } from '../../services/products.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListPage {
-  private productsService = inject(ProductsService);
+  private productsStore = inject(ProductsStore);
   private fb = inject(FormBuilder);
 
   availableRowsToShow = [5, 10, 20];
@@ -38,11 +30,7 @@ export class ProductsListPage {
     startWith(this.fcSearch.value)
   );
 
-  // TODO handle products state
-  products$ = this.productsService.getProducts().pipe(
-    map((res) => res.data),
-    shareReplay({ bufferSize: 1, refCount: true })
-  );
+  products$ = this.productsStore.products$;
 
   filteredProducts$ = combineLatest([this.products$, this.searchValue$]).pipe(
     map(([products, search]) =>
@@ -58,8 +46,6 @@ export class ProductsListPage {
   );
 
   onDelete(id: string) {
-    this.productsService.deleteProduct(id).subscribe(() => {
-      // TODO remove from products state
-    });
+    this.productsStore.deleteProduct(id).subscribe();
   }
 }

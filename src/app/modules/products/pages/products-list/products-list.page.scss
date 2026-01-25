@@ -58,7 +58,8 @@ td.avatar {
     width: var(--diameter);
     height: var(--diameter);
     border-radius: 50%;
-    background: #e5e7eb;
+    background: var(--color-secondary-300);
+    color: var(--color-secondary-50);
     overflow: hidden;
 
     img {

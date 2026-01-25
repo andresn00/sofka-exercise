@@ -8,6 +8,7 @@ import { INPUT_DATE_FORMAT } from '../../../../constants/date.constants';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { ProductsService } from '../../services/products.service';
+import { ProductsStore } from '../../store/products.store';
 import { buildProductForm } from '../../utils/products.utils';
 
 @Component({
@@ -19,6 +20,7 @@ import { buildProductForm } from '../../utils/products.utils';
 })
 export class NewProductPage {
   private productsService = inject(ProductsService);
+  private productsStore = inject(ProductsStore);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -52,7 +54,7 @@ export class NewProductPage {
           if (exists) return this.fgProduct.controls.id.setErrors({ idExists: true });
         }),
         filter((exists) => !exists),
-        switchMap(() => this.productsService.createProduct(product))
+        switchMap(() => this.productsStore.createProduct(product))
       )
       .subscribe(() => {
         this.router.navigate(['..'], { relativeTo: this.route });

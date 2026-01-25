@@ -8,63 +8,7 @@
   <section class="table-section">
     @let filteredProducts = filteredProducts$ | async;
     <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th class="avatar">Logo</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>
-              <span>Fecha de liberación</span>
-              <button (click)="dateReleasePopover.open($event)" class="icon-btn">
-                <img src="icons/info-circle.svg" alt="i" />
-              </button>
-              <app-popover #dateReleasePopover>
-                <p class="header-popover">Fecha a liberar el producto para los clientes en General</p>
-              </app-popover>
-            </th>
-            <th>
-              <span>Fecha de reestructuración</span>
-              <button (click)="dateRevisionPopover.open($event)" class="icon-btn">
-                <img src="icons/info-circle.svg" alt="i" />
-              </button>
-              <app-popover #dateRevisionPopover>
-                <p class="header-popover">Fecha de revisión del producto para cambiar Términos y Condiciones</p>
-              </app-popover>
-            </th>
-            <!-- Actions -->
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (product of filteredProducts; track $index) {
-            <tr>
-              <td class="avatar">
-                <div><img [src]="product.logo" alt="Logo" /></div>
-              </td>
-              <td>{{ product.name }}</td>
-              <td>{{ product.description }}</td>
-              <td>{{ product.date_release | date: dateFormat }}</td>
-              <td>{{ product.date_revision | date: dateFormat }}</td>
-              <td>
-                <button (click)="actionsPopover.open($event)" class="icon-btn">
-                  <img src="icons/dots-vertical.svg" alt="..." />
-                </button>
-                <app-popover #actionsPopover>
-                  <div class="actions-popover">
-                    <button appButton color="secondary" [routerLink]="['./edit', product.id]">Editar</button>
-                    <button appButton color="danger" (click)="onDelete(product.id)">Eliminar</button>
-                  </div>
-                </app-popover>
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="5">No hay productos disponibles</td>
-            </tr>
-          }
-        </tbody>
-      </table>
+      <app-products-list [products]="filteredProducts || []"></app-products-list>
     </div>
     <div class="table-footer">
       <p>{{ filteredProducts?.length || 0 }} {{ filteredProducts?.length === 1 ? 'Resultado' : 'Resultados' }}</p>

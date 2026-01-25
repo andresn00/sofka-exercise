@@ -50,4 +50,13 @@
     --btn-disabled-background-color: var(--color-secondary-100);
     --btn-disabled-color: var(--color-secondary-400);
   }
+
+  &.btn-color-danger {
+    --btn-background-color: var(--color-danger);
+    --btn-color: var(--color-surface-0);
+    --btn-hover-background-color: var(--color-danger-500);
+    --btn-active-background-color: var(--color-danger-400);
+    --btn-disabled-background-color: var(--color-danger-100);
+    --btn-disabled-color: var(--color-surface-400);
+  }
 }

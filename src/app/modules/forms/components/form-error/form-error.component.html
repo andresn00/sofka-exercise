@@ -1,6 +1,6 @@
 @let vmError = vmError$ | async;
 @if (vmError?.showError) {
-  <div class="form-error">
+  <div data-testid="form-error" class="form-error">
     <small>
       @if (vmError?.errorMessage; as errorMessage) {
         {{ errorMessage }}

@@ -13,10 +13,25 @@
           <tr>
             <th class="avatar">Logo</th>
             <th>Nombre</th>
-            <!-- TODO info icon -->
             <th>Descripción</th>
-            <th>Fecha de liberación</th>
-            <th>Fecha de revisión</th>
+            <th>
+              <span>Fecha de liberación</span>
+              <button (click)="dateReleasePopover.open($event)" class="icon-btn">
+                <img src="icons/info-circle.svg" alt="i" />
+              </button>
+              <app-popover #dateReleasePopover>
+                <p class="header-popover">Fecha a liberar el producto para los clientes en General</p>
+              </app-popover>
+            </th>
+            <th>
+              <span>Fecha de reestructuración</span>
+              <button (click)="dateRevisionPopover.open($event)" class="icon-btn">
+                <img src="icons/info-circle.svg" alt="i" />
+              </button>
+              <app-popover #dateRevisionPopover>
+                <p class="header-popover">Fecha de revisión del producto para cambiar Términos y Condiciones</p>
+              </app-popover>
+            </th>
             <!-- Actions -->
             <th></th>
           </tr>
@@ -31,11 +46,12 @@
               <td>{{ product.description }}</td>
               <td>{{ product.date_release | date: dateFormat }}</td>
               <td>{{ product.date_revision | date: dateFormat }}</td>
-              <!-- TODO 3 dots icon, menu -->
               <td>
-                <button (click)="popover.open($event)">...</button>
-                <app-popover #popover>
-                  <div class="action-popover">
+                <button (click)="actionsPopover.open($event)" class="icon-btn">
+                  <img src="icons/dots-vertical.svg" alt="..." />
+                </button>
+                <app-popover #actionsPopover>
+                  <div class="actions-popover">
                     <button appButton color="secondary" [routerLink]="['./edit', product.id]">Editar</button>
                     <button appButton color="danger" (click)="onDelete(product.id)">Eliminar</button>
                   </div>

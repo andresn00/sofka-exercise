@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { combineLatest, combineLatestWith, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
+import { normalizeString } from '../../../../utils/string.utils';
 import { FormFieldComponent } from '../../../forms/components/form-field/form-field.component';
 import { ProductsStore } from '../../store/products.store';
 
@@ -37,8 +38,9 @@ export class ProductsListPage {
       !search
         ? products
         : products.filter((product) => {
-            // TODO normalize texts
-            return product.name.includes(search);
+            const normalizedName = normalizeString(product.name);
+            const normalizedSearch = normalizeString(search);
+            return normalizedName.includes(normalizedSearch);
           })
     ),
     combineLatestWith(this.fcRows.valueChanges.pipe(startWith(this.fcRows.value))),

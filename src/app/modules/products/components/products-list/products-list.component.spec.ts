@@ -8,11 +8,11 @@ describe('ProductsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductsListComponent]
-    })
-    .compileComponents();
+      imports: [ProductsListComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProductsListComponent);
+    fixture.componentRef.setInput('products', []);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

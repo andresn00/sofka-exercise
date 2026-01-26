@@ -12,7 +12,7 @@ import { ProductsStore } from '../../store/products.store';
 import { buildProductForm } from '../../utils/products.utils';
 
 @Component({
-  selector: 'app-new-product',
+  selector: 'app-new-product-page',
   imports: [ProductFormComponent, ButtonDirective],
   templateUrl: './new-product.page.html',
   styleUrl: './new-product.page.scss',

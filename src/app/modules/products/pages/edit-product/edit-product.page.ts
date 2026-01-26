@@ -11,7 +11,7 @@ import { ProductsStore } from '../../store/products.store';
 import { buildProductForm } from '../../utils/products.utils';
 
 @Component({
-  selector: 'app-edit-product',
+  selector: 'app-edit-product-page',
   imports: [ProductFormComponent, ButtonDirective],
   templateUrl: './edit-product.page.html',
   styleUrl: './edit-product.page.scss',

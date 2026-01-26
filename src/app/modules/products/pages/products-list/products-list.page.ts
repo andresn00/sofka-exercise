@@ -10,7 +10,7 @@ import { ProductsListComponent } from '../../components/products-list/products-l
 import { ProductsStore } from '../../store/products.store';
 
 @Component({
-  selector: 'app-product-list',
+  selector: 'app-product-list-page',
   imports: [AsyncPipe, RouterLink, ReactiveFormsModule, ButtonDirective, FormFieldComponent, ProductsListComponent],
   templateUrl: './products-list.page.html',
   styleUrl: './products-list.page.scss',

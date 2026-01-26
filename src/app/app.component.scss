@@ -1,0 +1,15 @@
+.toolbar {
+  text-align: center;
+  background-color: var(--color-surface-0);
+  color: var(--color-secondary-700);
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
+    margin-right: 0.75rem;
+  }
+}

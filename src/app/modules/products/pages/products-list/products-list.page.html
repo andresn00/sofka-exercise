@@ -8,7 +8,7 @@
   <section class="table-section">
     @let filteredProducts = filteredProducts$ | async;
     <div class="table-container">
-      <app-products-list [products]="filteredProducts || []"></app-products-list>
+      <app-products-list [products]="filteredProducts || []" (delete)="onDelete($event)"></app-products-list>
     </div>
     <div class="table-footer">
       <p>{{ filteredProducts?.length || 0 }} {{ filteredProducts?.length === 1 ? 'Resultado' : 'Resultados' }}</p>

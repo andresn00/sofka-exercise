@@ -43,7 +43,9 @@
           <app-popover #actionsPopover>
             <div class="actions-popover">
               <button appButton color="secondary" [routerLink]="['./edit', product.id]">Editar</button>
-              <button appButton color="danger" (click)="delete.emit(product.id)">Eliminar</button>
+              <button appButton color="danger" (click)="delete.emit(product.id); actionsPopover.close()">
+                Eliminar
+              </button>
             </div>
           </app-popover>
         </td>

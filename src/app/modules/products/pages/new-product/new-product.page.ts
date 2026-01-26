@@ -3,9 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addYears, format, parse } from 'date-fns';
-import { filter, switchMap, tap } from 'rxjs';
+import { catchError, EMPTY, filter, switchMap, tap } from 'rxjs';
 import { INPUT_DATE_FORMAT } from '../../../../constants/date.constants';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
+import { ToastService } from '../../../toast/services/toast.service';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { ProductsService } from '../../services/products.service';
 import { ProductsStore } from '../../store/products.store';
@@ -21,6 +22,7 @@ import { buildProductForm } from '../../utils/products.utils';
 export class NewProductPage {
   private productsService = inject(ProductsService);
   private productsStore = inject(ProductsStore);
+  private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -50,14 +52,16 @@ export class NewProductPage {
     this.productsService
       .verifyProduct(product.id)
       .pipe(
+        catchError(() => EMPTY),
         tap((exists) => {
           if (exists) return this.fgProduct.controls.id.setErrors({ idExists: true });
         }),
         filter((exists) => !exists),
-        switchMap(() => this.productsStore.createProduct(product))
+        switchMap(() => this.productsStore.createProduct(product).pipe(catchError(() => EMPTY)))
       )
       .subscribe(() => {
         this.router.navigate(['..'], { relativeTo: this.route });
+        this.toastService.show('Producto creado', 'success');
       });
   }
 

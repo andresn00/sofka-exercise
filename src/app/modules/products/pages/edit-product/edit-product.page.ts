@@ -3,9 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addYears, format, parse } from 'date-fns';
-import { switchMap } from 'rxjs';
+import { catchError, EMPTY, switchMap } from 'rxjs';
 import { INPUT_DATE_FORMAT } from '../../../../constants/date.constants';
 import { ButtonDirective } from '../../../../directives/button/button.directive';
+import { ToastService } from '../../../toast/services/toast.service';
 import { ProductFormComponent } from '../../components/product-form/product-form.component';
 import { ProductsStore } from '../../store/products.store';
 import { buildProductForm } from '../../utils/products.utils';
@@ -19,6 +20,7 @@ import { buildProductForm } from '../../utils/products.utils';
 })
 export class EditProductPage {
   private productsStore = inject(ProductsStore);
+  private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -27,7 +29,9 @@ export class EditProductPage {
 
   fgProduct = buildProductForm(this.fb, 'edit', this.minDateRelease);
 
-  product$ = this.route.paramMap.pipe(switchMap((params) => this.productsStore.getProduct(params.get('id') as string)));
+  product$ = this.route.paramMap.pipe(
+    switchMap((params) => this.productsStore.getProduct(params.get('id') as string).pipe(catchError(() => EMPTY)))
+  );
 
   constructor() {
     this.product$.pipe(takeUntilDestroyed()).subscribe((product) => {
@@ -54,6 +58,7 @@ export class EditProductPage {
     const product = this.fgProduct.getRawValue();
     this.productsStore.updateProduct(product.id, product).subscribe(() => {
       this.router.navigate(['../..'], { relativeTo: this.route });
+      this.toastService.show('Producto actualizado', 'success');
     });
   }
 

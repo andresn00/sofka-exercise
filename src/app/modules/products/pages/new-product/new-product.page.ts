@@ -54,7 +54,9 @@ export class NewProductPage {
       .pipe(
         catchError(() => EMPTY),
         tap((exists) => {
-          if (exists) return this.fgProduct.controls.id.setErrors({ idExists: true });
+          if (!exists) return;
+          this.fgProduct.controls.id.setErrors({ idExists: true });
+          this.toastService.show('El producto ya existe', 'error');
         }),
         filter((exists) => !exists),
         switchMap(() => this.productsStore.createProduct(product).pipe(catchError(() => EMPTY)))
